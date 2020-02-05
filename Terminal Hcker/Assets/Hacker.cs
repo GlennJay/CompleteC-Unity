@@ -1,14 +1,38 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Game configuration data
+    string[] level1Passwords = {
+        "grade book",
+        "schedule",
+        "desk",
+        "detention",
+        "tardy"
+
+    };
+     string[] level2Passwords = {
+        "currency",
+        "lock",
+        "teller",
+        "income",
+        "loans"
+
+    };
+     string[] level3Passwords = {
+        "high security",
+        "general",
+        "CIA",
+        "top secret",
+        "military"
+
+    };
 
     //Game state
     int level;
+    string password;
+    
     enum Screen {MainMenu, Password, Win };
     Screen currentScreen;
     void Start()
@@ -17,13 +41,14 @@ public class Hacker : MonoBehaviour
         showMainMenu();
     }
     void showMainMenu(){
+        currentScreen = Screen.MainMenu;
         Terminal.ClearScreen();
 
         Terminal.WriteLine("   BEWARE: Your about to dive deep!  ");
         Terminal.WriteLine("\nwhich area you want to hack into?");
         Terminal.WriteLine("Press 1 for the Principal's office");
         Terminal.WriteLine("Press 2 for the Bank vault");
-        Terminal.WriteLine("Press 1 for the Pentagon");
+        Terminal.WriteLine("Press 3 for the Pentagon");
         Terminal.WriteLine("Enter your selection: ");
     }
     //only decide how to handle input
@@ -36,27 +61,19 @@ public class Hacker : MonoBehaviour
         }else if(currentScreen == Screen.MainMenu)
         {
             RunMainMenu(input);
+        }else if(currentScreen == Screen.Password){
+           CheckPassword(input);
         }
     }
 
     void RunMainMenu(string input)
     {
-        if (input == "1")
-        {
-            level = 1;
-            StartGame();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            StartGame();
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            StartGame();
-        }
-        else if (input == "omg")
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+        
+        if(isValidLevelNumber){
+            level = int.Parse(input);
+            AskForPassword();
+        }else if (input == "omg")
         {
             Terminal.WriteLine("NOT THAT....");
         }
@@ -66,11 +83,95 @@ public class Hacker : MonoBehaviour
         }
     }
 
-    void StartGame()
+    void AskForPassword()
     {
+        Terminal.ClearScreen();
         currentScreen = Screen.Password;
-        Terminal.WriteLine("You chose level " + level);
-        Terminal.WriteLine("Enter the password");
+        SetRandPassword();
+        MenuPrompt();
+        Terminal.WriteLine("Enter the password. hint: " + password.Anagram());
+
+    }
+
+    void SetRandPassword()
+    {
+        switch (level)
+        {
+            case 1:
+                password = level1Passwords[UnityEngine.Random.Range(0, level1Passwords.Length)];
+                break;
+
+            case 2:
+                password = level2Passwords[UnityEngine.Random.Range(0, level2Passwords.Length)];
+                break;
+
+            case 3:
+                password = level3Passwords[UnityEngine.Random.Range(0, level3Passwords.Length)];
+                break;
+
+            default:
+                Debug.LogError("You hit an error");
+                break;
+        }
+    }
+
+    void CheckPassword(string input){
+        if(input == password)
+        {
+            DisplayWinScreen();
+        }
+        else
+        {
+            AskForPassword();
+        }
+    }
+
+    void DisplayWinScreen()
+    {
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
+        MenuPrompt();
+    }
+
+    void ShowLevelReward()
+    {
+        switch (level)
+        { 
+            case 1:
+            Terminal.WriteLine(@"
+***    *    ***    ***  
+*  *  * *  *      *
+***  * * *  *      *    
+*    *   *    *      *  
+*    *   *  **     **   
+            ");
+            break;
+            case 2:
+            Terminal.WriteLine(@"
+***    *    ***    ***
+*  *  * *  *      *
+***  * * *  *      *    
+*    *   *    *      *  
+*    *   *  **     **   
+            ");
+            break;
+            case 3:
+            Terminal.WriteLine(@"
+***    *    ***    ***
+*  *  * *  *      *
+***  * * *  *      *    
+*    *   *    *      *  
+*    *   *  **     **   
+            ");
+            break;
+        }
+
+        
+    }
+
+    void MenuPrompt(){
+        Terminal.WriteLine("Type menu to get back to main menu");
     }
 
     // Update is called once per frame
