@@ -31,12 +31,16 @@ void OnCollisionEnter(Collision collision){
    switch(collision.gameObject.tag){
        case "Friendly":
        //do nothing
+       print("Landed");
             break;
 
-       default:
+       case "Obstacle":
        //dead if hits walls
        print("dead");
             break;
+        default:
+        break;
+
    }
 }
 
@@ -45,9 +49,9 @@ void OnCollisionEnter(Collision collision){
         rigidBody.freezeRotation = true; //takes manual control of the rocket
         float rotationThisFrame = rcsThrust * Time.deltaTime; //frame rate independent
         
-        if(Input.GetKey(KeyCode.A)){ //rotate right
+        if(Input.GetKey(KeyCode.D)){ //rotate right
             transform.Rotate(Vector3.forward * rotationThisFrame);
-        }else if(Input.GetKey(KeyCode.D)){ //rotate left
+        }else if(Input.GetKey(KeyCode.A)){ //rotate left
             transform.Rotate(Vector3.back * rotationThisFrame);
         }
         rigidBody.freezeRotation = false; //resume physics control on rotation
