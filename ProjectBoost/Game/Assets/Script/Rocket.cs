@@ -13,6 +13,9 @@ public class Rocket : MonoBehaviour
      [SerializeField] AudioClip mainEngine;
      [SerializeField] AudioClip death;
      [SerializeField] AudioClip success;
+      [SerializeField] ParticleSystem mainEngineParticles;
+     [SerializeField] ParticleSystem deathParticles;
+     [SerializeField] ParticleSystem successParticles;
      
      
      //current scene
@@ -48,8 +51,6 @@ public class Rocket : MonoBehaviour
         if(state == State.Alive){            
             RespondToRotateInput();
             RespondToThrustInput();
-        }else if(state == State.Dying){ // TODO stop sound on death
-           
         }
         
     }
@@ -66,9 +67,11 @@ void OnCollisionEnter(Collision collision){
         case "Obstacle":
             //dead if hits walls
             Dying();
+            //deathParticles.Stop();
             break;
             case "Finished": //player wins ang goes to the next level
                 StartSuccess();
+                
                 break;
             default:
             break;
@@ -76,57 +79,61 @@ void OnCollisionEnter(Collision collision){
    }
 }
 
-    private void StartSuccess()
-    {
-        state = State.Transcending;
-        audioSource.Stop();
-        audioSource.PlayOneShot(success);
-        Invoke("LoadNextLevel", 1f);
-    }
+private void StartSuccess()
+{
+    state = State.Transcending;
+    audioSource.Stop();
+    audioSource.PlayOneShot(success);
+    successParticles.Play();
+    Invoke("LoadNextLevel", 1f);
+}
 
-    void Dying(){
-     state = State.Dying;
+void Dying(){
+    state = State.Dying;
     audioSource.Stop();  
+    mainEngineParticles.Stop();
     audioSource.PlayOneShot(death);  
+    deathParticles.Play();
     Invoke("LoadActiveLevel", 1f);
 }
-    private void LoadActiveLevel()
-    {
-        SceneManager.LoadScene(currentScene);
-    }
+private void LoadActiveLevel()
+{
+    SceneManager.LoadScene(currentScene);
+}
 
-    private void LoadNextLevel()
+private void LoadNextLevel()
+{
+    
+    SceneManager.LoadScene(currentScene + 1);
+}
+
+private void RespondToRotateInput()
+{
+    rigidBody.freezeRotation = true; //takes manual control of the rocket
+    float rotationThisFrame = rcsThrust * Time.deltaTime; //frame rate independent
+    if(Input.GetKey(KeyCode.D)){ //rotate right
+        transform.Rotate(Vector3.forward * rotationThisFrame);
+    }else if(Input.GetKey(KeyCode.A)){ //rotate left
+        transform.Rotate(Vector3.back * rotationThisFrame);
+    }
+    rigidBody.freezeRotation = false; //resume physics control on rotation
+}
+
+private void RespondToThrustInput()
+{
+    //relative force allows the changes to change on local scope in game
+    if(Input.GetKey(KeyCode.Space))
+    { //can thrust while rotating
+        ApplyThrust();
+    }
+    else
     {
+        audioSource.Stop(); //stop audio based of space key
         
-        SceneManager.LoadScene(currentScene + 1);
     }
 
-    private void RespondToRotateInput()
-    {
-        rigidBody.freezeRotation = true; //takes manual control of the rocket
-        float rotationThisFrame = rcsThrust * Time.deltaTime; //frame rate independent
-        if(Input.GetKey(KeyCode.D)){ //rotate right
-            transform.Rotate(Vector3.forward * rotationThisFrame);
-        }else if(Input.GetKey(KeyCode.A)){ //rotate left
-            transform.Rotate(Vector3.back * rotationThisFrame);
-        }
-        rigidBody.freezeRotation = false; //resume physics control on rotation
-    }
 
-    private void RespondToThrustInput()
-    {
-        //relative force allows the changes to change on local scope in game
-       if(Input.GetKey(KeyCode.Space))
-        { //can thrust while rotating
-            ApplyThrust();
-        }
-        else
-        {
-            audioSource.Stop(); //stop audio based of space key
-        }
-
-
-    }
+}
 
     private void ApplyThrust()
     {
@@ -135,5 +142,6 @@ void OnCollisionEnter(Collision collision){
         {
             audioSource.PlayOneShot(mainEngine);
         }
+        mainEngineParticles.Play();
     }
 }
