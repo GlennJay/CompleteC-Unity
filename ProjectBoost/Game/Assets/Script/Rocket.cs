@@ -40,13 +40,17 @@ public class Rocket : MonoBehaviour
         if(state == State.Alive){
             Rotate();
             Thrust();
-        }else if(state == State.Dying){
+        }else if(state == State.Dying){ // TODO stop sound on death
             Dying();
         }
         
     }
 
 void OnCollisionEnter(Collision collision){
+    //retruns if the player is not alive and stops execution
+    if(state != State.Alive){
+        return;
+    }
    switch(collision.gameObject.tag){
        case "Friendly":
        //do nothing since it is the starting point
@@ -54,11 +58,11 @@ void OnCollisionEnter(Collision collision){
             case "Obstacle":
                 //dead if hits walls
                 state = State.Dying;
-                Invoke("LoadActiveScene", 1f);
+                Invoke("LoadActiveLevel", 1f);
                 break;
             case "Finished": //player wins ang goes to the next level
             state = State.Transcending;
-                Invoke("LoadNextScene", 1f);
+                Invoke("LoadNextLevel", 1f);
                 break;
             default:
         break;
@@ -84,12 +88,12 @@ void Dying(){
     
         
 }
-    private void LoadActiveScene()
+    private void LoadActiveLevel()
     {
         SceneManager.LoadScene(currentScene);
     }
 
-    private void LoadNextScene()
+    private void LoadNextLevel()
     {
         SceneManager.LoadScene(currentScene + 1);
     }
