@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class Rocket : MonoBehaviour
      AudioSource audioSource;
      [SerializeField] float rcsThrust = 100f; //float for rotation thrust
      [SerializeField] float mainThrust = 50f;
+
+     enum State {Alive, Dying, Transcending}
+
+     State state = State.Alive;
+
+     //current scene
+     int currentScene;
     
     
     // Start is called before the first frame update
@@ -17,6 +25,8 @@ public class Rocket : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>(); //rigidbody of the rocket ship
         audioSource = GetComponent<AudioSource>(); //audio for thrust
         rigidBody.mass = 1f;
+        //current scene
+      currentScene = SceneManager.GetActiveScene().buildIndex;
         
     }
 
@@ -31,12 +41,21 @@ void OnCollisionEnter(Collision collision){
    switch(collision.gameObject.tag){
        case "Friendly":
        //do nothing
-       print("Landed");
+       print("Lift Off");
+            break;
+
+        case "Finish":
+       //next level
+       print("Great Job!!");
+       if(currentScene < 2){
+          SceneManager.LoadScene(currentScene + 1);
+       }
             break;
 
        case "Obstacle":
        //dead if hits walls
        print("dead");
+       SceneManager.LoadScene(currentScene);
             break;
         default:
         break;
