@@ -10,6 +10,10 @@ public class Rocket : MonoBehaviour
      AudioSource audioSource;
      [SerializeField] float rcsThrust = 100f; //float for rotation thrust
      [SerializeField] float mainThrust = 50f;
+     [SerializeField] AudioClip mainEngine;
+     [SerializeField] AudioClip death;
+     [SerializeField] AudioClip success;
+     
      
      //current scene
      int currentScene;
@@ -31,17 +35,21 @@ public class Rocket : MonoBehaviour
         rigidBody.mass = 1f;
         currentScene = scene.buildIndex;
         print(scene.buildIndex);
+        audioSource.clip = success;
+       
+         
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(state == State.Alive){
-            Rotate();
-            Thrust();
+        
+        if(state == State.Alive){            
+            RespondToRotateInput();
+            RespondToThrustInput();
         }else if(state == State.Dying){ // TODO stop sound on death
-            Dying();
+           
         }
         
     }
@@ -54,39 +62,33 @@ void OnCollisionEnter(Collision collision){
    switch(collision.gameObject.tag){
        case "Friendly":
        //do nothing since it is the starting point
+        break;
+        case "Obstacle":
+            //dead if hits walls
+            Dying();
             break;
-            case "Obstacle":
-                //dead if hits walls
-                state = State.Dying;
-                Invoke("LoadActiveLevel", 1f);
-                break;
             case "Finished": //player wins ang goes to the next level
-            state = State.Transcending;
-                Invoke("LoadNextLevel", 1f);
+                StartSuccess();
                 break;
             default:
-        break;
+            break;
 
    }
 }
 
-void Dying(){
-    if(Input.GetKey(KeyCode.D)){ //rotate right
-        transform.Rotate(Vector3.zero);
-    }else if(Input.GetKey(KeyCode.A)){ //rotate left
-        transform.Rotate(Vector3.zero);
+    private void StartSuccess()
+    {
+        state = State.Transcending;
+        audioSource.Stop();
+        audioSource.PlayOneShot(success);
+        Invoke("LoadNextLevel", 1f);
     }
 
-    if(Input.GetKey(KeyCode.Space)){ //can thrust while rotating
-        rigidBody.AddRelativeForce(Vector3.zero);
-        audioSource.Stop();
-    }
-    
-         //stop audio based of space key
-    
-    
-    
-        
+    void Dying(){
+     state = State.Dying;
+    audioSource.Stop();  
+    audioSource.PlayOneShot(death);  
+    Invoke("LoadActiveLevel", 1f);
 }
     private void LoadActiveLevel()
     {
@@ -95,10 +97,11 @@ void Dying(){
 
     private void LoadNextLevel()
     {
+        
         SceneManager.LoadScene(currentScene + 1);
     }
 
-    private void Rotate()
+    private void RespondToRotateInput()
     {
         rigidBody.freezeRotation = true; //takes manual control of the rocket
         float rotationThisFrame = rcsThrust * Time.deltaTime; //frame rate independent
@@ -110,18 +113,27 @@ void Dying(){
         rigidBody.freezeRotation = false; //resume physics control on rotation
     }
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         //relative force allows the changes to change on local scope in game
-       if(Input.GetKey(KeyCode.Space)){ //can thrust while rotating
-         rigidBody.AddRelativeForce(Vector3.up * mainThrust);
-            if(!audioSource.isPlaying){
-            audioSource.Play();
-       }
-        }else{
+       if(Input.GetKey(KeyCode.Space))
+        { //can thrust while rotating
+            ApplyThrust();
+        }
+        else
+        {
             audioSource.Stop(); //stop audio based of space key
         }
 
 
+    }
+
+    private void ApplyThrust()
+    {
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngine);
+        }
     }
 }
