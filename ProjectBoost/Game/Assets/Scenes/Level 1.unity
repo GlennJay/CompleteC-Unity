@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.98
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.45133024, g: 0.50094557, b: 0.5729826, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 2bf488e22497fce4dbfe62a806616ff0,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVector: {x: -12, y: 0, z: 0}
   movementFactor: 0
+  period: 0
 --- !u!1001 &123682806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -705,37 +707,37 @@ PrefabInstance:
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.4
+      value: 8.06452
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.02
+      value: 16.002125
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.53
+      value: 43.590908
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0048008515
+      value: -0.0014146845
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9886409
+      value: 0.99709356
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.14669815
+      value: -0.07372882
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.032338407
+      value: -0.019145297
       objectReference: {fileID: 0}
     - target: {fileID: 194214721317462776, guid: cbfef9b8cd518c04d93dad1880d6dac5,
         type: 3}
@@ -839,6 +841,7 @@ GameObject:
   - component: {fileID: 451694760787967512}
   - component: {fileID: 3132537329422837889}
   - component: {fileID: 3692320845743506168}
+  - component: {fileID: 685846671736657693}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Obstacle
@@ -846,6 +849,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &685846671736657693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685846671736657692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6169667b64e3fac4488100485a23fd42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementVector: {x: 4, y: 2, z: 0}
+  movementFactor: 0
+  period: 2
 --- !u!23 &3132537329422837889
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1567,37 +1585,37 @@ PrefabInstance:
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 39.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 21.2
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 40.9
+      value: 7.9
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.40821788
+      value: -0.00461402
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.23456968
+      value: 0.98808974
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.10938163
+      value: -0.1508093
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8754261
+      value: -0.03023067
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
@@ -1607,16 +1625,36 @@ PrefabInstance:
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 50
+      value: 17.356
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -30
+      value: 183.50499
       objectReference: {fileID: 0}
     - target: {fileID: 6197815270757205618, guid: f04ff06131098b4439d270775eda5193,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197815270757205619, guid: f04ff06131098b4439d270775eda5193,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197815270757205619, guid: f04ff06131098b4439d270775eda5193,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197815270757205619, guid: f04ff06131098b4439d270775eda5193,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197815270757205619, guid: f04ff06131098b4439d270775eda5193,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

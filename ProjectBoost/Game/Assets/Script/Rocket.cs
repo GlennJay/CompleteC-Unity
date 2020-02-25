@@ -8,6 +8,7 @@ public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
      AudioSource audioSource;
+     [SerializeField] float levelLoadDelay = 2f;
      [SerializeField] float rcsThrust = 100f; //float for rotation thrust
      [SerializeField] float mainThrust = 50f;
      [SerializeField] AudioClip mainEngine;
