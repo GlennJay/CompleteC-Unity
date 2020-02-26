@@ -5,8 +5,10 @@ using System;
 
 public class Rocket : MonoBehaviour
 {
+    
     public float mainThrust = 1f;
      Rigidbody rigidBody;
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +23,11 @@ public class Rocket : MonoBehaviour
 
     }
 
-    private static void InputProcess()
+     void InputProcess()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.
+            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
         }
 
         if (Input.GetKey(KeyCode.D))
