@@ -5,8 +5,13 @@ using System;
 
 public class Rocket : MonoBehaviour
 {
-    
-    public float mainThrust = 1f;
+    //main thrust make serialized
+    [SerializeField] float mainThrust;
+    //rotation thrust make serialized
+    [SerializeField] float rotationThrust;
+
+
+
      Rigidbody rigidBody;
      
     // Start is called before the first frame update
@@ -19,24 +24,41 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputProcess();
+        Rotation();
+        Thrust();
 
     }
 
-     void InputProcess()
+    //FUNCTION thust
+    //process the thrust make sure to make as frame rate independent
+    void Thrust()
     {
+        float frameThrust = mainThrust * Time.deltaTime;
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+            rigidBody.AddRelativeForce(Vector3.up * frameThrust);
+            
         }
+    }
+
+
+    //FUNCTION rotation
+    //process rotation make sure to make frame rate independent
+    //freeze the rigidbody rotation before and after the rotation to enable and disable the physics engine
+
+     void Rotation()
+    {
+        rigidBody.freezeRotation = true;
+        float frameRotation = rotationThrust * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.D))
         {
-            print("right");
+            transform.Rotate(Vector3.back * frameRotation);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            print("left");
+            transform.Rotate(Vector3.forward * frameRotation);
         }
+        rigidBody.freezeRotation = false;
     }
 }
