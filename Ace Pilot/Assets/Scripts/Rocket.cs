@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using UnityEngine.SceneManagement;
+[DisallowMultipleComponent]
 public class Rocket : MonoBehaviour
 {
     //main thrust make serialized
@@ -13,6 +14,11 @@ public class Rocket : MonoBehaviour
     [SerializeField] AudioClip engine;
     [SerializeField] AudioClip explosion;
     [SerializeField] AudioClip success;
+    [SerializeField] ParticleSystem rightEngine;
+    [SerializeField] ParticleSystem leftEngine;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] ParticleSystem successParticles;
+    
 
     enum State { Alive, Dead, Transcending};
     State state = State.Alive;
@@ -43,19 +49,32 @@ public class Rocket : MonoBehaviour
     //FUNCTION detect collisions, enemy collision trigers death, friendly collision trigers transcending
     void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive) { return; }
         switch (collision.gameObject.tag)
         {
             case "enemy":
-                audiosource.Stop();
-                audiosource.PlayOneShot(explosion);
+                Dying();
                 break;
             case "success":
-                audiosource.Stop();
-                audiosource.PlayOneShot(success);
+                Transcending();
                 break;
             default:
                 break;
         }
+    }
+
+    private void Transcending()
+    {
+        state = State.Transcending;
+        audiosource.Stop();
+        audiosource.PlayOneShot(success);
+    }
+
+    private void Dying()
+    {
+        state = State.Dead;
+        audiosource.Stop();
+        audiosource.PlayOneShot(explosion);
     }
 
     //FUNCTION respond to thrust input
@@ -64,10 +83,13 @@ public class Rocket : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             Thrust();
+            //leftEngine.Play();
         }
         else
         {
             audiosource.Stop();
+            rightEngine.Stop();
+            leftEngine.Stop();
 
         }
 
@@ -83,8 +105,15 @@ public class Rocket : MonoBehaviour
         if (!audiosource.isPlaying)
         {
             audiosource.PlayOneShot(engine);
+           
         }
-        
+
+        if (!rightEngine.isPlaying && !leftEngine.isPlaying)
+        {
+            rightEngine.Play();
+            leftEngine.Play();
+        }
+
 
     }
 
