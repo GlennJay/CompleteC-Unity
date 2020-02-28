@@ -9,6 +9,8 @@ public class Rocket : MonoBehaviour
     [SerializeField] float mainThrust;
     //rotation thrust make serialized
     [SerializeField] float rotationThrust;
+    
+
 
 
 
