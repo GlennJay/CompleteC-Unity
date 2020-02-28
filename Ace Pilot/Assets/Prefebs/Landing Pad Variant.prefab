@@ -15,7 +15,12 @@ PrefabInstance:
     - target: {fileID: 8523496639858224263, guid: 0d1eee54fe4f3d94d97e60fe28f00b28,
         type: 3}
       propertyPath: m_Name
-      value: Landing Pad
+      value: Landing Pad Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523496639858224263, guid: 0d1eee54fe4f3d94d97e60fe28f00b28,
+        type: 3}
+      propertyPath: m_TagString
+      value: success
       objectReference: {fileID: 0}
     - target: {fileID: 8523496639858224312, guid: 0d1eee54fe4f3d94d97e60fe28f00b28,
         type: 3}

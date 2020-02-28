@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 1634065355}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1124,7 +1124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634065354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.21, y: 2.51, z: 4.82}
+  m_LocalPosition: {x: 10.21, y: 2.51, z: 3.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1293,6 +1293,108 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &2051742228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3688224895782605338, guid: 6892a7eae7443454db181e4d643cffea,
+    type: 3}
+  m_PrefabInstance: {fileID: 3688224894334846990}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2051742229
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051742228}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &464324394671671847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1365,6 +1467,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Landing Pad
       objectReference: {fileID: 0}
+    - target: {fileID: 1191708543529134498, guid: 6c190f9b0258ebc4ba1d689c6684a8fb,
+        type: 3}
+      propertyPath: m_TagString
+      value: friendly
+      objectReference: {fileID: 0}
     - target: {fileID: 1191708543529134499, guid: 6c190f9b0258ebc4ba1d689c6684a8fb,
         type: 3}
       propertyPath: m_Mesh
@@ -1424,6 +1531,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.215
       objectReference: {fileID: 0}
+    - target: {fileID: 3688224895782605334, guid: 6892a7eae7443454db181e4d643cffea,
+        type: 3}
+      propertyPath: engine
+      value: 
+      objectReference: {fileID: 8300000, guid: ed4e6ce1d608510468864d7e09efb1b2, type: 3}
+    - target: {fileID: 3688224895782605334, guid: 6892a7eae7443454db181e4d643cffea,
+        type: 3}
+      propertyPath: explosion
+      value: 
+      objectReference: {fileID: 8300000, guid: 589e38e241235cb4db7dbc04a4cbce5a, type: 3}
+    - target: {fileID: 3688224895782605334, guid: 6892a7eae7443454db181e4d643cffea,
+        type: 3}
+      propertyPath: success
+      value: 
+      objectReference: {fileID: 8300000, guid: 252369dd28673804aa8fff00cf053672, type: 3}
     - target: {fileID: 3688224895782605336, guid: 6892a7eae7443454db181e4d643cffea,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1616,6 +1738,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Launch Pad
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523496639858224263, guid: 0d1eee54fe4f3d94d97e60fe28f00b28,
+        type: 3}
+      propertyPath: m_TagString
+      value: friendly
       objectReference: {fileID: 0}
     - target: {fileID: 8523496639858224314, guid: 0d1eee54fe4f3d94d97e60fe28f00b28,
         type: 3}
