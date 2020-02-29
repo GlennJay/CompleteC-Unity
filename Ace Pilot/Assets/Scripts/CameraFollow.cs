@@ -12,7 +12,7 @@ public class CameraFollow : MonoBehaviour
     //offset of the camera
     public Vector3 offset;
 
-     void LateUpdate()
+     void FixedUpdate()
     {
         Vector3 desiredPosition = targetPlayer.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, cameraSpeed);
