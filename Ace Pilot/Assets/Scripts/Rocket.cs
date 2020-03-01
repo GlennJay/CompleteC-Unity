@@ -18,6 +18,13 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem leftEngine;
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem successParticles;
+
+    //Debug bool keys
+    bool collisionEnabled;
+    
+
+    //active scene
+    Scene scene;
     
 
     enum State { Alive, Dead, Transcending};
@@ -27,40 +34,75 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         
+         collisionEnabled = true;
         rigidBody = GetComponent<Rigidbody>();
         audiosource = GetComponent<AudioSource>();
         audiosource.clip = success;
+        scene = SceneManager.GetActiveScene();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(state == State.Alive)
+        if (state == State.Alive)
         {
             Rotation();
             respondToThrustInput();
-        }
-       
 
+        }
+        RespondToDebugKeys();
+
+    }
+
+     void RespondToDebugKeys()
+    {
+        if (Input.GetKey(KeyCode.L))
+        {
+            LoadNextScene();
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            collisionEnabled = false;
+        }
+        else
+        {
+            collisionEnabled = true;
+        }
     }
 
     //FUNCTION detect collisions, enemy collision trigers death, friendly collision trigers transcending
     void OnCollisionEnter(Collision collision)
     {
         if (state != State.Alive) { return; }
-        switch (collision.gameObject.tag)
-        {
-            case "enemy":
-                Dying();
-                break;
-            case "success":
-                Transcending();
-                break;
-            default:
-                break;
+
+        if(!collisionEnabled){
+            switch (collision.gameObject.tag)
+            {
+                case "enemy":
+                    Dying();
+                    
+                    break;
+                case "success":
+                    Transcending();
+                    
+                    break;
+                default:
+                    break;
+            }
         }
+        
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene(scene.buildIndex + 1);
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(scene.buildIndex);
     }
 
     private void Transcending()
@@ -68,13 +110,19 @@ public class Rocket : MonoBehaviour
         state = State.Transcending;
         audiosource.Stop();
         audiosource.PlayOneShot(success);
+        successParticles.Play();
+        Invoke("LoadNextScene",2f);
     }
 
     private void Dying()
     {
         state = State.Dead;
         audiosource.Stop();
+        rightEngine.Stop();
+        leftEngine.Stop();
         audiosource.PlayOneShot(explosion);
+        deathParticles.Play();
+        Invoke("ReloadScene", 2f);
     }
 
     //FUNCTION respond to thrust input

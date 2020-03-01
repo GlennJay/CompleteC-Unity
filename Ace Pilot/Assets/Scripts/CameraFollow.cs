@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour
 
     //camera speed
     public float cameraSpeed = 0.125f;
+   
 
     //offset of the camera
     public Vector3 offset;
