@@ -20,7 +20,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem successParticles;
 
     //Debug bool keys
-    bool collisionEnabled;
+    public bool collisionEnabled;
     
 
     //active scene
@@ -51,7 +51,10 @@ public class Rocket : MonoBehaviour
             respondToThrustInput();
 
         }
-        RespondToDebugKeys();
+        if(Debug.isDebugBuild){
+            RespondToDebugKeys();
+        }
+        
 
     }
 
@@ -64,20 +67,17 @@ public class Rocket : MonoBehaviour
 
         if (Input.GetKey(KeyCode.C))
         {
-            collisionEnabled = false;
+            collisionEnabled = !collisionEnabled;
         }
-        else
-        {
-            collisionEnabled = true;
-        }
+        
     }
 
     //FUNCTION detect collisions, enemy collision trigers death, friendly collision trigers transcending
     void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive) { return; }
+        if (state != State.Alive || !collisionEnabled) { return; }
 
-        if(!collisionEnabled){
+        if(collisionEnabled){
             switch (collision.gameObject.tag)
             {
                 case "enemy":

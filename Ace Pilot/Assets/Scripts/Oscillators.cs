@@ -18,6 +18,12 @@ public class Oscillators : MonoBehaviour
     //time for each period
     [SerializeField] float period = 2f;
 
+ 
+    
+    
+
+
+    
     
 
 
@@ -26,12 +32,22 @@ public class Oscillators : MonoBehaviour
     {
         startingPos = transform.position;
         
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(period <= Mathf.Epsilon) { return; }
+        VectorOscillitor();
+        
+
+       
+    }
+
+    private void VectorOscillitor()
+    {
+        if (period <= Mathf.Epsilon) { return; }
         //time for each circle based on the time of the game
         float cycle = Time.time / period;
         const float tau = Mathf.PI * 2;
