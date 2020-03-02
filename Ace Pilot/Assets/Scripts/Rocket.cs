@@ -24,7 +24,10 @@ public class Rocket : MonoBehaviour
     
 
     //active scene
-    Scene scene;
+    public int activeScene;
+    //scenes in build
+    public int sceneCount;
+    
     
 
     enum State { Alive, Dead, Transcending};
@@ -38,7 +41,9 @@ public class Rocket : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         audiosource = GetComponent<AudioSource>();
         audiosource.clip = success;
-        scene = SceneManager.GetActiveScene();
+         sceneCount = SceneManager.sceneCountInBuildSettings;
+         activeScene = SceneManager.GetActiveScene().buildIndex;
+        
 
     }
 
@@ -95,14 +100,23 @@ public class Rocket : MonoBehaviour
         
     }
 
-    private void LoadNextScene()
-    {
-        SceneManager.LoadScene(scene.buildIndex + 1);
+    private void LoadNextScene() //TODO add validation if there is no more scenes
+    {   
+        
+        
+         int nextScene = activeScene + 1;
+        
+        if( activeScene < sceneCount -1){
+            SceneManager.LoadScene(nextScene);
+        }else{
+             SceneManager.LoadScene(0);
+        }
+       
     }
 
     private void ReloadScene()
     {
-        SceneManager.LoadScene(scene.buildIndex);
+        SceneManager.LoadScene(activeScene);
     }
 
     private void Transcending()
