@@ -8,24 +8,29 @@ public class SplashScreen : MonoBehaviour
 
 
     Scene activeScene;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
          activeScene = SceneManager.GetActiveScene();
-        print(activeScene.buildIndex);
+        Invoke("LoadMainScreen", 2.0f);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Invoke("LoadMainScreen", 5.0f);
+        
     }
 
 
      public void LoadMainScreen()
     {
         SceneManager.LoadScene(activeScene.buildIndex + 1);
-        Debug.Log(activeScene.buildIndex);
+       
 
     }
 }
