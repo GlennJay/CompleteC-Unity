@@ -32,9 +32,11 @@ public class Player : MonoBehaviour
         //Implementing the y axis controlls
         float yThrow = CrossPlatformInputManager.GetAxis("Vertical");
         float yOffSet = yThrow * ySpeed * Time.deltaTime;
-
         float rawYPos = transform.localPosition.y + yOffSet;
         float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
+
+
+
 
         //moving the ship based off the xoffset and leaving the y and z to their local position of the parent camera object
         transform.localPosition = new Vector3(XClampRange, yClampRnage,transform.localPosition.z) ;
