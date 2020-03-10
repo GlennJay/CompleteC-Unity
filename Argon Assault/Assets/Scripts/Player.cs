@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //how far the stick moves
+        float horizontalThrow = CrossPlatformInputManager.GetAxis("Horizontal");
+        print(horizontalThrow);
         
     }
 }
