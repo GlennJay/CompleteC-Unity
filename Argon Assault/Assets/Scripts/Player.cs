@@ -22,28 +22,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float XClampRange = xInputManager();
+        float yClampRnage = yInputManager();
+
+        //moving the ship based off the xoffset and leaving the y and z to their local position of the parent camera object
+        transform.localPosition = new Vector3(XClampRange, yClampRnage, transform.localPosition.z);
+
+    }
+
+    private float yInputManager()
+    {
+        //Implementing the y axis controlls
+        float yThrow = CrossPlatformInputManager.GetAxis("Vertical");
+        float yOffSet = yThrow * ySpeed * Time.deltaTime;
+        float rawYPos = transform.localPosition.y + yOffSet;
+        float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
+        return yClampRnage;
+    }
+
+    private float xInputManager()
+    {
         //how far the stick moves
         float xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
         float xOffset = xThrow * xSpeed * Time.deltaTime;
         //taking the local position of the ship and adding the offset to move the ship
         float rawXPos = transform.localPosition.x + xOffset;
         float XClampRange = Mathf.Clamp(rawXPos, -xRange, xRange);
-
-        //Implementing the y axis controlls
-        float yThrow = CrossPlatformInputManager.GetAxis("Vertical");
-        float yOffSet = yThrow * ySpeed * Time.deltaTime;
-        float rawYPos = transform.localPosition.y + yOffSet;
-        float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
-
-
-
-
-        //moving the ship based off the xoffset and leaving the y and z to their local position of the parent camera object
-        transform.localPosition = new Vector3(XClampRange, yClampRnage,transform.localPosition.z) ;
-
-       
-        
-        
-        
+        return XClampRange;
     }
 }
