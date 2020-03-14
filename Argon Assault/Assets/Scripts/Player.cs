@@ -7,11 +7,19 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [Tooltip("In ms^-1")][SerializeField] float xSpeed = 4f;
+    [Tooltip("In ms^-1")][SerializeField] float Speed = 4f;
     [Tooltip("In meter")][SerializeField] float xRange = 7f;
-    [Tooltip("In ms^-1")] [SerializeField] float ySpeed = 4f;
+    //[Tooltip("In ms^-1")] [SerializeField] float ySpeed = 4f;
     [Tooltip("In meter")] [SerializeField] float yMinRange = -2;
     [Tooltip("In meter")] [SerializeField] float yMaxRange = 3;
+    [SerializeField] float positionPitchFactor = -6f;
+    [SerializeField] float controlPitchFactor = -5f;
+    [SerializeField] float positionYawFactor = -3f;
+    [SerializeField] float controlYawFactor = -3f;
+    [SerializeField] float positionRollFactor = -3f;
+    [SerializeField] float controlRollFactor = -3f;
+    float yThrow, xThrow;
+
 
 
     void Start()
@@ -22,32 +30,54 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float XClampRange = xInputManager();
-        float yClampRnage = yInputManager();
+        ProcessTranslation();
+        ProcessRotation();
 
         //moving the ship based off the xoffset and leaving the y and z to their local position of the parent camera object
+        
+
+    }
+    private void ProcessRotation()
+    {
+        //combining the input of y to go with the rotation
+        float positionDueToPitchFactor = transform.localPosition.y * positionPitchFactor;
+        float positionDueToControlThrow = yThrow * controlPitchFactor;
+        float pitch = positionDueToPitchFactor  + positionDueToControlThrow;
+
+        float positionDueToYawFactor = transform.localPosition.x * positionYawFactor;
+        float positionDueToXControlThrow = xThrow * controlYawFactor;
+        float yaw = positionDueToYawFactor + positionDueToXControlThrow;
+
+        float positionDueToRollFactor = transform.localPosition.x * positionRollFactor;
+        float positionDueToZControlThrow = xThrow * controlRollFactor;
+        float roll = positionDueToRollFactor + positionDueToZControlThrow;
+        transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
+
+    }
+
+    private void ProcessTranslation()
+    {
+        yThrow = CrossPlatformInputManager.GetAxis("Vertical");
+        xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
+
+        float xOffset = xThrow * Speed * Time.deltaTime;
+        float yOffSet = yThrow * Speed * Time.deltaTime;
+
+        float rawXPos = transform.localPosition.x + xOffset;
+        float rawYPos = transform.localPosition.y + yOffSet;
+
+        float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
+        float XClampRange = Mathf.Clamp(rawXPos, -xRange, xRange);
+
+
+
+        //taking the local position of the ship and adding the offset to move the ship
+
+
+
         transform.localPosition = new Vector3(XClampRange, yClampRnage, transform.localPosition.z);
 
     }
 
-    private float yInputManager()
-    {
-        //Implementing the y axis controlls
-        float yThrow = CrossPlatformInputManager.GetAxis("Vertical");
-        float yOffSet = yThrow * ySpeed * Time.deltaTime;
-        float rawYPos = transform.localPosition.y + yOffSet;
-        float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
-        return yClampRnage;
-    }
-
-    private float xInputManager()
-    {
-        //how far the stick moves
-        float xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
-        float xOffset = xThrow * xSpeed * Time.deltaTime;
-        //taking the local position of the ship and adding the offset to move the ship
-        float rawXPos = transform.localPosition.x + xOffset;
-        float XClampRange = Mathf.Clamp(rawXPos, -xRange, xRange);
-        return XClampRange;
-    }
+    
 }
