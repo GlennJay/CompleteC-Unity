@@ -9,15 +9,20 @@ public class Player : MonoBehaviour
 
     [Tooltip("In ms^-1")][SerializeField] float Speed = 4f;
     [Tooltip("In meter")][SerializeField] float xRange = 7f;
+
     //[Tooltip("In ms^-1")] [SerializeField] float ySpeed = 4f;
-    [Tooltip("In meter")] [SerializeField] float yMinRange = -2;
-    [Tooltip("In meter")] [SerializeField] float yMaxRange = 3;
-    [SerializeField] float positionPitchFactor = -6f;
-    [SerializeField] float controlPitchFactor = -5f;
-    [SerializeField] float positionYawFactor = -3f;
-    [SerializeField] float controlYawFactor = -3f;
-    [SerializeField] float positionRollFactor = -3f;
-    [SerializeField] float controlRollFactor = -3f;
+    [Tooltip("In meter")] [SerializeField] float yMinRange = -3.73f;
+    [Tooltip("In meter")] [SerializeField] float yMaxRange = 3.8f;
+
+    [SerializeField] float positionPitchFactor = -0.44f;
+    [SerializeField] float controlPitchFactor = 1.28f;
+
+    [SerializeField] float positionYawFactor = 0.13f;
+    //[SerializeField] float controlYawFactor = -3f;
+
+    //[SerializeField] float positionRollFactor = -3f;
+    [SerializeField] float controlRollFactor = -25.85f;
+
     float yThrow, xThrow;
 
 
@@ -44,13 +49,13 @@ public class Player : MonoBehaviour
         float positionDueToControlThrow = yThrow * controlPitchFactor;
         float pitch = positionDueToPitchFactor  + positionDueToControlThrow;
 
-        float positionDueToYawFactor = transform.localPosition.x * positionYawFactor;
-        float positionDueToXControlThrow = xThrow * controlYawFactor;
-        float yaw = positionDueToYawFactor + positionDueToXControlThrow;
+        //float positionDueToYawFactor = transform.localPosition.x * positionYawFactor;
+        //float positionDueToXControlThrow = xThrow * controlYawFactor;
+        float yaw = transform.localPosition.x * positionYawFactor;
 
-        float positionDueToRollFactor = transform.localPosition.x * positionRollFactor;
-        float positionDueToZControlThrow = xThrow * controlRollFactor;
-        float roll = positionDueToRollFactor + positionDueToZControlThrow;
+        //float positionDueToRollFactor = transform.localPosition.x * positionRollFactor;
+        //float positionDueToZControlThrow = xThrow * controlRollFactor;
+        float roll = xThrow * controlRollFactor;
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
 
     }

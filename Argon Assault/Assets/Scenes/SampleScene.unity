@@ -499,16 +499,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98ba436730890646832f0bad38cce7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 4
+  Speed: 10
   xRange: 7
   yMinRange: -3.73
   yMaxRange: 3.8
-  positionPitchFactor: 0.5
-  controlPitchFactor: 0.5
-  positionYawFactor: -1.5
-  controlYawFactor: -1.5
-  positionRollFactor: -3.27
-  controlRollFactor: -1.08
+  positionPitchFactor: -0.44
+  controlPitchFactor: 1.28
+  positionYawFactor: 0.13
+  controlRollFactor: -25.85
 --- !u!4 &1055312481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000011334895800, guid: 192b7fe2500f5e0449f21c651bc0474c,
