@@ -503,8 +503,8 @@ MonoBehaviour:
   xRange: 7
   yMinRange: -3.73
   yMaxRange: 3.8
-  positionPitchFactor: -0.44
-  controlPitchFactor: 1.28
+  positionPitchFactor: 0.2
+  controlPitchFactor: -22.83
   positionYawFactor: 0.13
   controlRollFactor: -25.85
 --- !u!4 &1055312481 stripped
@@ -632,11 +632,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011334895800, guid: 192b7fe2500f5e0449f21c651bc0474c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.49
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000011334895800, guid: 192b7fe2500f5e0449f21c651bc0474c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: -2.28
       objectReference: {fileID: 0}
     - target: {fileID: 4000011334895800, guid: 192b7fe2500f5e0449f21c651bc0474c, type: 3}
       propertyPath: m_LocalPosition.z
