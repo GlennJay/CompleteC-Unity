@@ -2,20 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-public class SplashScreen : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
-
-
     Scene activeScene;
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-    // Start is called before the first frame update
     void Start()
     {
-         activeScene = SceneManager.GetActiveScene();
+        activeScene = SceneManager.GetActiveScene();
         Invoke("LoadMainScreen", 2.0f);
 
     }
@@ -23,14 +15,14 @@ public class SplashScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
-     public void LoadMainScreen()
+    public void LoadMainScreen()
     {
         SceneManager.LoadScene(activeScene.buildIndex + 1);
-       
+
 
     }
 }

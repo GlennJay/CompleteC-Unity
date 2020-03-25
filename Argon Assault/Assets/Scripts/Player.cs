@@ -37,10 +37,15 @@ public class Player : MonoBehaviour
     {
         ProcessTranslation();
         ProcessRotation();
+    }
 
-        //moving the ship based off the xoffset and leaving the y and z to their local position of the parent camera object
-        
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        print("This is a collion event");
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        print("This is a trigger event");
     }
     private void ProcessRotation()
     {
@@ -62,15 +67,19 @@ public class Player : MonoBehaviour
 
     private void ProcessTranslation()
     {
+        //getting input from player
         yThrow = CrossPlatformInputManager.GetAxis("Vertical");
         xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
 
+        //getting the offset based on the speed and framerate
         float xOffset = xThrow * Speed * Time.deltaTime;
         float yOffSet = yThrow * Speed * Time.deltaTime;
 
+        //raw position that may or may not be inside screen
         float rawXPos = transform.localPosition.x + xOffset;
         float rawYPos = transform.localPosition.y + yOffSet;
 
+        //keeping a range to stay in screen
         float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
         float XClampRange = Mathf.Clamp(rawXPos, -xRange, xRange);
 
@@ -79,7 +88,7 @@ public class Player : MonoBehaviour
         //taking the local position of the ship and adding the offset to move the ship
 
 
-
+        //setting the local position off the clamped ranged
         transform.localPosition = new Vector3(XClampRange, yClampRnage, transform.localPosition.z);
 
     }
