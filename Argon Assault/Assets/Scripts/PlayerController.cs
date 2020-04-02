@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    [Header("General")]
     [Tooltip("In ms^-1")][SerializeField] float Speed = 4f;
     [Tooltip("In meter")][SerializeField] float xRange = 7f;
 
@@ -14,16 +14,19 @@ public class Player : MonoBehaviour
     [Tooltip("In meter")] [SerializeField] float yMinRange = -3.73f;
     [Tooltip("In meter")] [SerializeField] float yMaxRange = 3.8f;
 
+    [Header("Screen-Position Based")]
     [SerializeField] float positionPitchFactor = -0.44f;
-    [SerializeField] float controlPitchFactor = 1.28f;
-
     [SerializeField] float positionYawFactor = 0.13f;
-    //[SerializeField] float controlYawFactor = -3f;
 
-    //[SerializeField] float positionRollFactor = -3f;
+
+    [Header("Screen-Control Based")]
+    [SerializeField] float controlPitchFactor = 1.28f;
     [SerializeField] float controlRollFactor = -25.85f;
 
+    
+   
     float yThrow, xThrow;
+    bool triggerCollision = false;
 
 
 
@@ -31,20 +34,21 @@ public class Player : MonoBehaviour
     {
         
     }
-    private void OnCollisionEnter(Collision collision)
+    void MessageReciever()
     {
-        print("This is a collion event");
+        triggerCollision = true;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        print("This is a trigger event");
-    }
+    
 
     // Update is called once per frame
     void Update()
     {
-        ProcessTranslation();
-        ProcessRotation();
+        if(triggerCollision == false)
+        {
+            ProcessTranslation();
+            ProcessRotation();
+        }
+        
     }
 
    
