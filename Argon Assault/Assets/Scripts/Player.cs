@@ -31,14 +31,6 @@ public class Player : MonoBehaviour
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        ProcessTranslation();
-        ProcessRotation();
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         print("This is a collion event");
@@ -47,6 +39,15 @@ public class Player : MonoBehaviour
     {
         print("This is a trigger event");
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        ProcessTranslation();
+        ProcessRotation();
+    }
+
+   
     private void ProcessRotation()
     {
         //combining the input of y to go with the rotation
