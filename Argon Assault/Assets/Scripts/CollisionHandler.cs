@@ -13,6 +13,6 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        gameObject.SendMessage("MessageReciever");
+        gameObject.SendMessage("OnPlayerDeath");
     }
 }

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     
    
     float yThrow, xThrow;
-    bool triggerCollision = false;
+    bool IsControlsEnabled = true;
 
 
 
@@ -34,19 +34,19 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    void MessageReciever()
+    void OnPlayerDeath() //called by string reference
     {
-        triggerCollision = true;
+        IsControlsEnabled = false;
     }
     
 
     // Update is called once per frame
     void Update()
     {
-        if(triggerCollision == false)
+        if(IsControlsEnabled)
         {
-            ProcessTranslation();
-            ProcessRotation();
+           ProcessTranslation();
+           ProcessRotation();
         }
         
     }
