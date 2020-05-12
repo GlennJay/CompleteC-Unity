@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("General")]
-    [Tooltip("In ms^-1")][SerializeField] float Speed = 4f;
+    [Tooltip("In ms^-1")][SerializeField] float controlSpeed = 4f;
     [Tooltip("In meter")][SerializeField] float xRange = 7f;
 
     //[Tooltip("In ms^-1")] [SerializeField] float ySpeed = 4f;
@@ -27,11 +27,13 @@ public class PlayerController : MonoBehaviour
    
     float yThrow, xThrow;
     bool IsControlsEnabled = true;
+    private GameObject deathFX;
 
 
 
     void Start()
     {
+        deathFX = GetComponent<>
         
     }
     void OnPlayerDeath() //called by string reference
@@ -77,8 +79,8 @@ public class PlayerController : MonoBehaviour
         xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
 
         //getting the offset based on the speed and framerate
-        float xOffset = xThrow * Speed * Time.deltaTime;
-        float yOffSet = yThrow * Speed * Time.deltaTime;
+        float xOffset = xThrow * controlSpeed * Time.deltaTime;
+        float yOffSet = yThrow * controlSpeed * Time.deltaTime;
 
         //raw position that may or may not be inside screen
         float rawXPos = transform.localPosition.x + xOffset;
