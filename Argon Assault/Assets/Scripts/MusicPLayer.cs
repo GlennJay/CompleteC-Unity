@@ -8,8 +8,20 @@ public class MusicPLayer : MonoBehaviour
     
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        int numMusicPlayers = FindObjectsOfType<MusicPLayer>().Length;
+        //if more than one music player
+        if(numMusicPlayers > 1)
+        {
+            //destroy itself
+            Destroy(gameObject);
+        }
+        else
+        {
+            //else keep music player
+            DontDestroyOnLoad(gameObject);
+        }
+        
     }
-    // Start is called before the first frame update
+   
    
 }

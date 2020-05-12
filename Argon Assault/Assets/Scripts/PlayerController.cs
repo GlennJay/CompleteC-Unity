@@ -5,6 +5,8 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
+    //to-do find out why the first reload loads slow
+
     // Start is called before the first frame update
     [Header("General")]
     [Tooltip("In ms^-1")][SerializeField] float controlSpeed = 4f;
@@ -27,18 +29,20 @@ public class PlayerController : MonoBehaviour
    
     float yThrow, xThrow;
     bool IsControlsEnabled = true;
-    private GameObject deathFX;
+    
 
 
 
     void Start()
     {
-        deathFX = GetComponent<>
+        
         
     }
     void OnPlayerDeath() //called by string reference
     {
+        //disable controls and start death sequence
         IsControlsEnabled = false;
+        
     }
     
 
