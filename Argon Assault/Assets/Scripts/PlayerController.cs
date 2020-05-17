@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("General")]
     [Tooltip("In ms^-1")][SerializeField] float controlSpeed = 4f;
     [Tooltip("In meter")][SerializeField] float xRange = 7f;
+    [SerializeField] GameObject[] guns;
 
     //[Tooltip("In ms^-1")] [SerializeField] float ySpeed = 4f;
     [Tooltip("In meter")] [SerializeField] float yMinRange = -3.73f;
@@ -53,11 +55,40 @@ public class PlayerController : MonoBehaviour
         {
            ProcessTranslation();
            ProcessRotation();
+            ProcessFiring();
         }
         
     }
 
+     void ProcessFiring()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire"))
+        {
+            ActivateGuns();
+        }
+        else
+        {
+            DeactivateGuns();
+        }
+        
+    }
+    private void ActivateGuns()
+    {
+       foreach(GameObject gun in guns)
+        {
+            gun.SetActive(true);
+        }
+    }
+    private void DeactivateGuns()
+    {
+        foreach (GameObject gun in guns)
+        {
+            gun.SetActive(false);
+        }
+    }
+
    
+
     private void ProcessRotation()
     {
         //combining the input of y to go with the rotation
