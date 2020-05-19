@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     [Header("General")]
     [Tooltip("In ms^-1")][SerializeField] float controlSpeed = 4f;
-    [Tooltip("In meter")][SerializeField] float xRange = 7f;
+    [Tooltip("In meter")][SerializeField] float xMinRange = 7f;
+    [Tooltip("In meter")] [SerializeField] float xMaxRange = 7f;
     [SerializeField] GameObject[] guns;
 
     //[Tooltip("In ms^-1")] [SerializeField] float ySpeed = 4f;
@@ -123,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
         //keeping a range to stay in screen
         float yClampRnage = Mathf.Clamp(rawYPos, yMinRange, yMaxRange);
-        float XClampRange = Mathf.Clamp(rawXPos, -xRange, xRange);
+        float XClampRange = Mathf.Clamp(rawXPos, xMinRange, xMaxRange);
 
 
 
